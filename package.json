@@ -1,6 +1,6 @@
 {
 	"name": "eslint-plugin-path-alias",
-	"version": "0.0.0",
+	"version": "1.0.0",
 	"main": "./lib/index.js",
 	"repository": "https://github.com/msfragala/eslint-plugin-path-alias.git",
 	"author": "Mitchell Fragala <ms.fragala@gmail.com>",
