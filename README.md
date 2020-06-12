@@ -22,8 +22,8 @@ Examples of **incorrect** code for this rule:
 // In src/lib/speak.js
 // Path alias: @/lib ➝ src/lib
 // Path alias: @/constants ➝ src/constants
-import foo from './greet'; // Should use "@/lib"
-import bar from '../constants/hello.i18n.js'; // Sould use "@/constants"
+import foo from "./greet"; // Should use "@/lib"
+import bar from "../constants/hello.i18n.js"; // Sould use "@/constants"
 ```
 
 Examples of **correct** code for this rule:
@@ -32,9 +32,9 @@ Examples of **correct** code for this rule:
 // In src/lib/speak.js
 // Path alias: @/lib ➝ src/lib
 // Path alias: @/constants ➝ src/constants
-import foo from '@/lib/greet';
-import bar from '@/constants/hello.i18n.js';
-import styles from '../styles/foo.css'; // No matching alias so this is okay
+import foo from "@/lib/greet";
+import bar from "@/constants/hello.i18n.js";
+import styles from "../styles/foo.css"; // No matching alias so this is okay
 ```
 
 ## Options
@@ -47,14 +47,14 @@ The `exceptions` options takes an array of [nanomatch](https://github.com/microm
 
 ```json
 {
-	"rules": {
-		"path-alias/no-relative": [
-			"error",
-			{
-				"exceptions": ["*.module.css"]
-			}
-		]
-	}
+  "rules": {
+    "path-alias/no-relative": [
+      "error",
+      {
+        "exceptions": ["*.module.css"]
+      }
+    ]
+  }
 }
 ```
 
@@ -63,10 +63,10 @@ Examples of **correct** code with the settings above:
 ```js
 // In src/components/Button.js
 // Path alias: @/components ➝ src/components
-import foo from '@/components/Text';
-import styles from './Button.module.css';
+import foo from "@/components/Text";
+import styles from "./Button.module.css";
 // Or you can still use an alias
-import styles from '@/components/Button.module.css';
+import styles from "@/components/Button.module.css";
 ```
 
 ## When Not To Use It

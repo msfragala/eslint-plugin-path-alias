@@ -1,25 +1,25 @@
 {
-	"name": "eslint-plugin-path-alias",
-	"version": "1.0.0",
-	"main": "./lib/index.js",
-	"repository": "https://github.com/msfragala/eslint-plugin-path-alias.git",
-	"author": "Mitchell Fragala <ms.fragala@gmail.com>",
-	"license": "MIT",
-	"scripts": {
-		"test": "mocha tests/lib/**/*.js"
-	},
-	"files": [
-		"lib"
-	],
-	"peerDependencies": {
-		"eslint": "^7"
-	},
-	"devDependencies": {
-		"eslint": "^7.2.0",
-		"mocha": "^8.0.1",
-		"np": "^6.2.4"
-	},
-	"dependencies": {
-		"nanomatch": "^1.2.13"
-	}
+  "name": "eslint-plugin-path-alias",
+  "version": "1.0.0",
+  "main": "./lib/index.js",
+  "repository": "https://github.com/msfragala/eslint-plugin-path-alias.git",
+  "author": "Mitchell Fragala <ms.fragala@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "test": "mocha tests/lib/**/*.js"
+  },
+  "files": [
+    "lib"
+  ],
+  "peerDependencies": {
+    "eslint": "^7"
+  },
+  "devDependencies": {
+    "eslint": "^7.2.0",
+    "mocha": "^8.0.1",
+    "np": "^6.2.4"
+  },
+  "dependencies": {
+    "nanomatch": "^1.2.13"
+  }
 }
