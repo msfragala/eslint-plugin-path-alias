@@ -14,5 +14,8 @@
 	"devDependencies": {
 		"eslint": "^7.2.0",
 		"mocha": "^8.0.1"
+	},
+	"dependencies": {
+		"nanomatch": "^1.2.13"
 	}
 }
