@@ -4,25 +4,28 @@ const rule = require("../../../lib/rules/no-relative");
 
 const ruleTester = new RuleTester();
 
+/**
+ *
+ * @param {import('eslint').Linter.BaseConfig} options
+ * @returns {import('eslint').Linter.BaseConfig}
+ */
 function test(options) {
-  return Object.assign(
-    {
-      filename: __filename,
-      settings: {
-        "import/resolver": {
-          alias: [
-            ["@/rules", "./tests/lib/rules"],
-            ["@/package", "./package.json"],
-          ],
-        },
-      },
-      parserOptions: {
-        sourceType: "module",
-        ecmaVersion: 6,
+  return {
+    ...options,
+    filename: __filename,
+    settings: {
+      "import/resolver": {
+        alias: [
+          ["@/rules", "./tests/lib/rules"],
+          ["@/package", "./package.json"],
+        ],
       },
     },
-    options
-  );
+    parserOptions: {
+      sourceType: "module",
+      ecmaVersion: 2020,
+    },
+  };
 }
 
 ruleTester.run("path-alias", rule, {
@@ -38,6 +41,17 @@ ruleTester.run("path-alias", rule, {
       code: `import styles from './a.module.css'`,
       options: [{ exceptions: ["*.module.css"] }],
     }),
+    test({ code: `const a = import('@/rules/a')` }),
+    test({ code: `const a = import('../a')` }),
+    test({ code: `const pkg = import('@/package')` }),
+    test({
+      code: `const styles = import('./a.css')`,
+      options: [{ exceptions: ["*.css"] }],
+    }),
+    test({
+      code: `const styles = import('./a.module.css')`,
+      options: [{ exceptions: ["*.module.css"] }],
+    }),
   ],
   invalid: [
     test({
@@ -48,6 +62,16 @@ ruleTester.run("path-alias", rule, {
     test({
       code: `import pkg from '../../../package.json'`,
       output: `import pkg from '@/package'`,
+      errors: [{ message: rule.meta.messages.shouldUseAlias }],
+    }),
+    test({
+      code: `const a = import('./a')`,
+      output: `const a = import('@/rules/a')`,
+      errors: [{ message: rule.meta.messages.shouldUseAlias }],
+    }),
+    test({
+      code: `const pkg = import('../../../package.json')`,
+      output: `const pkg = import('@/package')`,
       errors: [{ message: rule.meta.messages.shouldUseAlias }],
     }),
   ],
