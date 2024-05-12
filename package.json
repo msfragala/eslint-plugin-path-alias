@@ -20,7 +20,7 @@
     "@types/node": "^20.12.11",
     "eslint": "^7.2.0",
     "mocha": "^8.0.1",
-    "np": "^6.2.4"
+    "np": "^10.0.5"
   },
   "dependencies": {
     "nanomatch": "^1.2.13"
