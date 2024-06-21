@@ -18,7 +18,7 @@
     "@types/eslint": "^8.56.10",
     "@types/estree": "^1.0.5",
     "@types/node": "^20.12.11",
-    "eslint": "^7.2.0",
+    "eslint": "^9.5.0",
     "mocha": "^8.0.1",
     "np": "^10.0.5"
   },

@@ -6,8 +6,8 @@ const ruleTester = new RuleTester();
 
 /**
  *
- * @param {import('eslint').Linter.BaseConfig} options
- * @returns {import('eslint').Linter.BaseConfig}
+ * @param {import('eslint').RuleTester.ValidTestCase} options
+ * @returns {import('eslint').RuleTester.ValidTestCase}
  */
 function test(options) {
   return {
@@ -20,10 +20,6 @@ function test(options) {
           ["@/package", "./package.json"],
         ],
       },
-    },
-    parserOptions: {
-      sourceType: "module",
-      ecmaVersion: 2020,
     },
   };
 }
