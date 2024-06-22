@@ -8,7 +8,7 @@
   "scripts": {
     "build": "node build.mjs",
     "pretest": "node build.mjs",
-    "test": "mocha tests/**/*.test.js",
+    "test": "mocha tests/**/*.test.mjs",
     "release": "np"
   },
   "exports": {

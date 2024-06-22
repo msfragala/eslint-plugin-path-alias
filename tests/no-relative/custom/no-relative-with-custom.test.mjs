@@ -1,6 +1,7 @@
-const { resolve } = require("path");
-const { RuleTester } = require("eslint");
-const plugin = require("../../../dist/index.js").default;
+import { resolve } from "path";
+import { RuleTester } from "eslint";
+import plugin from "../../../dist/index.mjs";
+
 const rule = plugin.rules["no-relative"];
 const ruleTester = new RuleTester();
 
@@ -13,11 +14,20 @@ function test(config) {
   const options = config.options?.[0] ?? {};
   return {
     ...config,
-    filename: __filename,
+    filename: import.meta.filename,
+    options: [
+      {
+        ...options,
+        paths: {
+          "@/custom": import.meta.dirname,
+          "@/tests": resolve(import.meta.dirname, ".."),
+        },
+      },
+    ],
   };
 }
 
-ruleTester.run("no-relative-with-tsconfig", rule, {
+ruleTester.run("no-relative-with-custom-paths", rule, {
   valid: [
     test({
       code: `import styles from './a.css'`,
@@ -38,22 +48,22 @@ ruleTester.run("no-relative-with-tsconfig", rule, {
   invalid: [
     test({
       code: `import a from './a'`,
-      output: `import a from '#current/a'`,
+      output: `import a from '@/custom/a'`,
       errors: [{ message: rule.meta.messages.shouldUseAlias }],
     }),
     test({
       code: `import b from '../b'`,
-      output: `import b from '#parent/b'`,
+      output: `import b from '@/tests/b'`,
       errors: [{ message: rule.meta.messages.shouldUseAlias }],
     }),
     test({
       code: `const a = import('./a')`,
-      output: `const a = import('#current/a')`,
+      output: `const a = import('@/custom/a')`,
       errors: [{ message: rule.meta.messages.shouldUseAlias }],
     }),
     test({
       code: `const b = import('../b')`,
-      output: `const b = import('#parent/b')`,
+      output: `const b = import('@/tests/b')`,
       errors: [{ message: rule.meta.messages.shouldUseAlias }],
     }),
   ],
