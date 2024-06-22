@@ -1,19 +1,17 @@
-const { dirname, resolve, basename } = require("path");
-const nanomatch = require("nanomatch");
-const getAliasMap = require("../utils/get-alias-map");
-const docUrl = require("../doc-url");
-const getIn = require("../utils/get-in");
+import { Rule } from "eslint";
+import { dirname, resolve, basename } from "node:path";
+import nanomatch from "nanomatch";
+import { getAliasMap } from "../utils/get-alias-map";
+import { docsUrl } from "../utils/docs-url";
+import { getIn } from "../utils/get-in";
 
-/**
- * @type {import('eslint').Rule.RuleModule}
- */
-module.exports = {
+export const noRelative = {
   meta: {
     type: "suggestion",
     docs: {
       description:
         "Ensure imports use path aliases whenever possible vs. relative paths",
-      url: docUrl("no-relative"),
+      url: docsUrl("no-relative"),
     },
     fixable: "code",
     schema: [
@@ -41,6 +39,10 @@ module.exports = {
 
     return {
       ImportExpression(node) {
+        if (node.source.type !== "Literal") return;
+        if (typeof node.source.value !== "string") return;
+
+        const raw = node.source.raw;
         const importPath = node.source.value;
 
         if (!/^(\.?\.\/)/.test(importPath)) {
@@ -57,7 +59,6 @@ module.exports = {
             messageId: "shouldUseAlias",
             data: { alias },
             fix(fixer) {
-              const raw = node.source.raw;
               const path = aliasMap[alias];
               const aliased = resolved.replace(path, alias);
               const fixed = raw.replace(importPath, aliased);
@@ -67,6 +68,8 @@ module.exports = {
         }
       },
       ImportDeclaration(node) {
+        if (typeof node.source.value !== "string") return;
+
         const importPath = node.source.value;
 
         if (!/^(\.?\.\/)/.test(importPath)) {
@@ -94,7 +97,7 @@ module.exports = {
       },
     };
   },
-};
+} satisfies Rule.RuleModule;
 
 function matchToAlias(path, aliasMap) {
   return Object.keys(aliasMap).find((alias) => {

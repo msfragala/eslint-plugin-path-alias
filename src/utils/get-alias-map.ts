@@ -1,12 +1,8 @@
-const getIn = require("./get-in");
-const { resolve } = require("path");
+import { Rule } from "eslint";
+import { getIn } from "./get-in";
+import { resolve } from "node:path";
 
-/**
- *
- * @param {import('eslint').Rule.RuleContext} context
- * @returns
- */
-module.exports = function getAliasMap(context) {
+export function getAliasMap(context: Rule.RuleContext) {
   const rootPath = context.cwd || context.getCwd();
   const aliasSettings = getIn(context.settings, "import/resolver.alias");
 
@@ -23,4 +19,4 @@ module.exports = function getAliasMap(context) {
 
     return aliasMap;
   }, {});
-};
+}

@@ -1,7 +1,7 @@
 const { resolve } = require("path");
 const { RuleTester } = require("eslint");
-const rule = require("../../../lib/rules/no-relative");
-
+const plugin = require("../../../dist/index.js").default;
+const rule = plugin.rules["no-relative"];
 const ruleTester = new RuleTester();
 
 /**
