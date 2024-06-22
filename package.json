@@ -18,10 +18,17 @@
     }
   },
   "files": [
-    "lib"
+    "dist",
+    "index.js",
+    "package.json"
   ],
   "peerDependencies": {
     "eslint": "^9"
+  },
+  "dependencies": {
+    "get-tsconfig": "^4.7.5",
+    "nanomatch": "^1.2.13",
+    "read-package-up": "^11.0.0"
   },
   "devDependencies": {
     "@types/eslint": "^8.56.10",
@@ -32,11 +39,5 @@
     "mocha": "^8.0.1",
     "np": "^10.0.5",
     "typescript": "^5.5.2"
-  },
-  "dependencies": {
-    "get-tsconfig": "^4.7.5",
-    "nanomatch": "^1.2.13",
-    "read-package-up": "^11.0.0",
-    "tsconfck": "^3.1.0"
   }
 }
