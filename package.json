@@ -8,7 +8,7 @@
   "scripts": {
     "build": "node build.mjs",
     "pretest": "node build.mjs",
-    "test": "mocha tests/lib/**/*.js"
+    "test": "mocha tests/**/*.test.js"
   },
   "exports": {
     "./package.json": "./package.json",
@@ -34,6 +34,9 @@
     "typescript": "^5.5.2"
   },
   "dependencies": {
-    "nanomatch": "^1.2.13"
+    "get-tsconfig": "^4.7.5",
+    "nanomatch": "^1.2.13",
+    "read-package-up": "^11.0.0",
+    "tsconfck": "^3.1.0"
   }
 }
