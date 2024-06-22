@@ -21,7 +21,7 @@
     "lib"
   ],
   "peerDependencies": {
-    "eslint": "^7"
+    "eslint": "^9"
   },
   "devDependencies": {
     "@types/eslint": "^8.56.10",
