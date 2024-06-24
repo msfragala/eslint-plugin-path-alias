@@ -36,7 +36,7 @@ export const noRelative = {
   },
   create(context) {
     const exceptions = context.options[0]?.exceptions;
-    const filePath = context.filename;
+    const filePath = context.getFilename?.() ?? context.filename;
     const aliases = resolveAliases(context);
 
     // If no aliases are found,

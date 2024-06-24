@@ -25,12 +25,6 @@ outputs.forEach((output) => {
     bundle: true,
     minify: true,
     platform: "node",
-    external: [
-      "eslint",
-      "nanomatch",
-      "node:path",
-      "get-tsconfig",
-      "read-package-up",
-    ],
+    external: ["eslint", "nanomatch", "get-tsconfig", "find-pkg"],
   });
 });

@@ -1,7 +1,8 @@
 import { type Rule } from "eslint";
 import { type TsConfigResult, getTsconfig } from "get-tsconfig";
 import { resolve, dirname } from "node:path";
-import { NormalizedReadResult, readPackageUpSync } from "read-package-up";
+import findPkg from "find-pkg";
+import { readFileSync } from "node:fs";
 
 export function resolveAliases(
   context: Rule.RuleContext
@@ -10,23 +11,28 @@ export function resolveAliases(
     return resolveCustomPaths(context);
   }
 
-  const tsConfig = getTsconfig(context.filename);
+  const filename = context.getFilename?.() ?? context.filename;
+  const tsConfig = getTsconfig(filename);
 
   if (tsConfig?.config?.compilerOptions?.paths) {
     return resolveTsconfigPaths(tsConfig);
   }
 
-  const pkg = readPackageUpSync({ cwd: dirname(context.filename) });
+  const path = findPkg.sync(dirname(filename));
 
-  if (pkg?.packageJson?.imports) {
-    return resolvePackageImports(pkg);
+  if (!path) return;
+
+  const pkg = JSON.parse(readFileSync(path).toString());
+
+  if (pkg?.imports) {
+    return resolvePackageImports(pkg, path);
   }
 }
 
-function resolvePackageImports(pkg: NormalizedReadResult) {
+function resolvePackageImports(pkg: any, pkgPath: string) {
   const aliases = new Map<string, string[]>();
-  const imports = pkg.packageJson.imports ?? {};
-  const base = dirname(pkg.path);
+  const imports = pkg.imports ?? {};
+  const base = dirname(pkgPath);
 
   Object.entries(imports).forEach(([alias, path]) => {
     if (!path) return;
@@ -69,7 +75,8 @@ function resolveCustomPaths(context: Rule.RuleContext) {
       return;
     }
 
-    const resolved = resolve(context.cwd, path);
+    const cwd = context.getCwd?.() ?? context.cwd;
+    const resolved = resolve(cwd, path);
     aliases.set(alias, [resolved]);
   });
 
